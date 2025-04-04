@@ -7,41 +7,28 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-DATABASE =  "mydatabase"
+DATABASE =  "oscar"
 mycursor.execute(f"CREATE DATABASE IF NOT EXISTS {DATABASE}")
 
-mycursor.execute("SHOW DATABASES")
-for x in mycursor:
-    print(x)
-
 mycursor.execute(f"USE {DATABASE}")
-mycursor.execute("CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))")
 
 
-
-query = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-val = [
-  ('Peter', 'Lowstreet 4'),
-  ('Amy', 'Apple st 652'),
-  ('Hannah', 'Mountain 21'),
-  ('Michael', 'Valley 345'),
-  ('Sandy', 'Ocean blvd 2'),
-  ('Betty', 'Green Grass 1'),
-  ('Richard', 'Sky st 331'),
-  ('Susan', 'One way 98'),
-  ('Vicky', 'Yellow Garden 2'),
-  ('Ben', 'Park Lane 38'),
-  ('William', 'Central st 954'),
-  ('Chuck', 'Main Road 989'),
-  ('Viola', 'Sideway 1633')
-]
-mycursor.executemany(query, val)
-mydb.commit()
-
-mycursor.execute("SELECT * FROM customers WHERE name='Amy'")
+mycursor.execute("SELECT ev, cim FROM film WHERE nyert = 1 ORDER BY ev;")
 for x in mycursor:
     print(x)
 
-mycursor.execute("SELECT * FROM customers WHERE address= 'One way 98'")
+mycursor.execute("SELECT ev FROM film GROUP BY ev HAVING COUNT(film.id) >= 10;")
 for x in mycursor:
     print(x)
+
+mycursor.execute("SELECT cim FROM film WHERE ev BETWEEN 1939 AND 1945;")
+for x in mycursor:
+    print(x)
+
+mycursor.execute("SELECT cim FROM film WHERE ev BETWEEN 1939 AND 1945;")
+for x in mycursor:
+    print(x)
+
+mycursor.execute("SELECT cim FROM film WHERE nyert = 1 AND ev + 10 <= bemutato;")
+for x in mycursor:
+    print(x) 
